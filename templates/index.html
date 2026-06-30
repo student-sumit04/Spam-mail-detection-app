@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="shell">
+        <section class="panel">
+            <div class="heading">
+                <p class="eyebrow">Email Classifier</p>
+                <h1>Spam Detection System</h1>
+            </div>
+
+            {% if setup_error %}
+                <div class="alert alert-warning">{{ setup_error }}</div>
+            {% endif %}
+
+            {% if error %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% endif %}
+
+            <form action="/predict" method="POST">
+                <label for="message">Message</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Type your email or SMS message here..."
+                    required>{{ message or "" }}</textarea>
+
+                <button type="submit">Predict</button>
+            </form>
+
+            {% if prediction %}
+                <div class="result">
+                    <span>Prediction</span>
+                    <strong>{{ prediction }}</strong>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
